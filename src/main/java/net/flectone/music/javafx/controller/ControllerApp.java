@@ -26,21 +26,12 @@ import java.util.ResourceBundle;
 public class ControllerApp implements Initializable {
 
     // JavaScript scripts constants
-    private static final String PLAY_SCRIPT =
-            "if (!document.getElementsByClassName('player-controls__btn_play')[0].classList.contains('player-controls__btn_pause')) {" +
-                    "document.getElementsByClassName('player-controls__btn_play')[0].click();" +
-                    "} ";
-    private static final String PAUSE_SCRIPT = "if (document.getElementsByClassName('player-controls__btn_play')[0].classList.contains('player-controls__btn_pause')) {" +
-            "document.getElementsByClassName('player-controls__btn_play')[0].click(); " +
-            "}";
-    private static final String NEXT_SCRIPT = "if (document.getElementsByClassName('player-controls__btn_play')[0].classList.contains('player-controls__btn_pause')) {" +
-            "document.getElementsByClassName('player-controls__btn_next')[0].click();" +
-            "} else {document.getElementsByClassName('player-controls__btn_play')[0].click();}";
-    private static final String CLICK_SCRIPT = "document.querySelector('.player-controls__btn_play').click();";
-    private static final String PLAY_SCRIPT = "if (!externalApi.isPlaying()) {externalAPI.togglePause();}";
-    private static final String PAUSE_SCRIPT = "if (externalApi.isPlaying()) {externalAPI.togglePause();}";
-    private static final String NEXT_SCRIPT = "externalAPI.next();";
+    private static final String PLAY_SCRIPT = "if (!externalAPI.isPlaying()) {externalAPI.togglePause();}";
+    private static final String PAUSE_SCRIPT = "if (externalAPI.isPlaying()) {externalAPI.togglePause();}";
+    private static final String NEXT_SCRIPT = "if (!externalAPI.isPlaying()) {externalAPI.togglePause();} else {externalAPI.next();}";
     private static final String CLICK_SCRIPT = "externalAPI.togglePause();";
+    private static final String AUTO_SONG_INJECT_SCRIPT = "externalAPI.on(externalAPI.EVENT_STATE, () => setTimeout(() => {if (externalAPI.getProgress().position == 0.0) {externalAPI.next();}}, 1500));";
+
     private static final String GET_TIME_SCRIPT = "document.querySelector('.ytp-time-duration').textContent";
     private static final String GET_MEDIA_NAME_SCRIPT = "document.getElementsByClassName('style-scope ytd-watch-metadata')[0].firstElementChild.textContent;";
     private static final String GET_SONG_NAME_SCRIPT = "externalAPI.getCurrentTrack().title;";
@@ -83,8 +74,10 @@ public class ControllerApp implements Initializable {
         playerTextField.setText("https://music.yandex.ru/home");
         playerWebEngine = playerWebView.getEngine();
         playerWebEngine.setJavaScriptEnabled(true);
+
         playerWebEngine.getLoadWorker().stateProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue == Worker.State.SUCCEEDED) {
+                playerWebEngine.executeScript(SONG_INJECT_SCRIPT);
                 CookieUtils.saveCookies();
             }
         });
