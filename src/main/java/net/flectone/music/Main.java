@@ -1,31 +1,26 @@
-package net.flectone.music.flectonemusicapp;
+package net.flectone.music;
 
 
 import com.github.kwhat.jnativehook.GlobalScreen;
-import com.github.kwhat.jnativehook.NativeHookException;
-import com.github.kwhat.jnativehook.keyboard.NativeKeyEvent;
-import com.github.kwhat.jnativehook.keyboard.NativeKeyListener;
-import javafx.application.Platform;
-import lombok.Getter;
-import lombok.Setter;
-import net.flectone.music.flectonemusicapp.file.Config;
-import net.flectone.music.flectonemusicapp.javafx.FlectoneMusicApp;
-import net.flectone.music.flectonemusicapp.javafx.listener.KeyListener;
-import net.flectone.music.flectonemusicapp.twitch.TwitchHandler;
-import net.flectone.music.flectonemusicapp.util.FileUtils;
+import net.flectone.music.file.Config;
+import net.flectone.music.javafx.fxml.FlectoneMusic;
+import net.flectone.music.javafx.listener.KeyListener;
+import net.flectone.music.twitch.TwitchHandler;
+import net.flectone.music.util.FileUtils;
 
 public class Main {
 
     public static TwitchHandler twitchHandler;
-    public static FlectoneMusicApp app;
+    public static FlectoneMusic app;
 
     public static void main(String[] args) {
+
         GlobalScreen.addNativeKeyListener(new KeyListener());
 
         twitchHandler = FileUtils.load(Config.TWITCH);
-        app = new FlectoneMusicApp();
+        app = new FlectoneMusic();
 
-        FlectoneMusicApp.main(args);
+        FlectoneMusic.main(args);
     }
 
     public static void setTwitchHandler(TwitchHandler twitchHandler) {

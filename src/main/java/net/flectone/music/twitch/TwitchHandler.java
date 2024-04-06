@@ -1,4 +1,4 @@
-package net.flectone.music.flectonemusicapp.twitch;
+package net.flectone.music.twitch;
 
 import com.github.philippheuer.credentialmanager.domain.OAuth2Credential;
 import com.github.twitch4j.TwitchClient;
@@ -6,12 +6,8 @@ import com.github.twitch4j.TwitchClientBuilder;
 import com.github.twitch4j.pubsub.events.RewardRedeemedEvent;
 import javafx.application.Platform;
 import lombok.Getter;
-import net.flectone.music.flectonemusicapp.file.Config;
-import net.flectone.music.flectonemusicapp.javafx.FlectoneMusicApp;
-import net.flectone.music.flectonemusicapp.util.UrlUtils;
-
-import java.io.*;
-import java.util.Queue;
+import net.flectone.music.javafx.fxml.FlectoneMusic;
+import net.flectone.music.util.UrlUtils;
 
 @Getter
 public class TwitchHandler {
@@ -75,7 +71,7 @@ public class TwitchHandler {
         String youtubeUrl = UrlUtils.getYouTubeUrl(rewardString);
         if (youtubeUrl != null) {
             System.out.println(youtubeUrl);
-            Platform.runLater(() -> FlectoneMusicApp.getController().addMusic(youtubeUrl));
+            Platform.runLater(() -> FlectoneMusic.getControllerApp().addMusic(youtubeUrl));
         }
     }
 
@@ -84,7 +80,7 @@ public class TwitchHandler {
             String message = "@" +
                     getLoginFromString(rewardString) +
                     ", сейчас играет «" +
-                    FlectoneMusicApp.getController().getCurrentTrackName() +
+                    FlectoneMusic.getControllerApp().getCurrentTrackName() +
                     "»";
 
             twitchClient.getChat().sendMessage(channelName, message);
@@ -92,7 +88,7 @@ public class TwitchHandler {
     }
 
     private void skipMusic() {
-        Platform.runLater(FlectoneMusicApp.getController()::mediaSkipButtonAction);
+        Platform.runLater(FlectoneMusic.getControllerApp()::mediaSkipButtonAction);
     }
 
     private String getLoginFromString(String string) {

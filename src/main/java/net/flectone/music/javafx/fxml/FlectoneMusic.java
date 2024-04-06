@@ -2,7 +2,6 @@ package net.flectone.music.javafx.fxml;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import lombok.Getter;
@@ -13,7 +12,7 @@ import net.flectone.music.util.FileUtils;
 
 import java.io.*;
 
-public class FlectoneMusicApp extends Application {
+public class FlectoneMusic extends Application {
 
     @Getter
     private static ControllerApp controllerApp;

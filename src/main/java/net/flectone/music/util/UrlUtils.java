@@ -1,4 +1,4 @@
-package net.flectone.music.flectonemusicapp.util;
+package net.flectone.music.util;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -16,7 +16,6 @@ public class UrlUtils {
             return null;
         }
     }
-
 
     public static String getYouTubeUrl(String string) {
         System.out.println(string);

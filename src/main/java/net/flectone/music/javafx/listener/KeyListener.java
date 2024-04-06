@@ -1,11 +1,11 @@
-package net.flectone.music.flectonemusicapp.javafx.listener;
+package net.flectone.music.javafx.listener;
 
 import com.github.kwhat.jnativehook.GlobalScreen;
 import com.github.kwhat.jnativehook.NativeHookException;
 import com.github.kwhat.jnativehook.keyboard.NativeKeyEvent;
 import com.github.kwhat.jnativehook.keyboard.NativeKeyListener;
 import javafx.application.Platform;
-import net.flectone.music.flectonemusicapp.javafx.FlectoneMusicApp;
+import net.flectone.music.javafx.fxml.FlectoneMusic;
 
 public class KeyListener implements NativeKeyListener {
 
@@ -21,8 +21,8 @@ public class KeyListener implements NativeKeyListener {
     public void nativeKeyPressed(NativeKeyEvent e) {
 
         switch (e.getKeyCode()) {
-            case NativeKeyEvent.VC_MEDIA_NEXT -> Platform.runLater(() -> FlectoneMusicApp.getController().mediaSkipButtonAction());
-            case NativeKeyEvent.VC_MEDIA_PLAY -> Platform.runLater(() -> FlectoneMusicApp.getController().clickPlayer());
+            case NativeKeyEvent.VC_MEDIA_NEXT -> Platform.runLater(() -> FlectoneMusic.getControllerApp().mediaSkipButtonAction());
+            case NativeKeyEvent.VC_MEDIA_PLAY -> Platform.runLater(() -> FlectoneMusic.getControllerApp().clickPlayer());
         }
 
         if (e.getKeyCode() == NativeKeyEvent.VC_ESCAPE) {

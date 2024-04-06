@@ -1,9 +1,10 @@
-package net.flectone.music.javafx;
+package net.flectone.music.javafx.controller;
 
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import net.flectone.music.Main;
 import net.flectone.music.twitch.TwitchHandler;
@@ -16,9 +17,9 @@ import java.util.ResourceBundle;
 public class ControllerTwitch implements Initializable {
 
     @FXML
-    TextField identityProviderTextField;
+    PasswordField identityProviderTextField;
     @FXML
-    TextField accessTokenTextField;
+    PasswordField accessTokenTextField;
     @FXML
     TextField channelIDTextField;
     @FXML
@@ -29,7 +30,6 @@ public class ControllerTwitch implements Initializable {
     TextField addRewardTextField;
     @FXML
     TextField skipRewardTextField;
-
     @FXML
     Button saveButton;
 
@@ -42,6 +42,7 @@ public class ControllerTwitch implements Initializable {
         accessTokenTextField.setText(twitchHandler.getAccessToken());
         channelIDTextField.setText(twitchHandler.getChannelID());
         channelNameTextField.setText(twitchHandler.getChannelName());
+
         getRewardTextField.setText(twitchHandler.getGetReward());
         addRewardTextField.setText(twitchHandler.getAddReward());
         skipRewardTextField.setText(twitchHandler.getSkipReward());
@@ -57,7 +58,11 @@ public class ControllerTwitch implements Initializable {
         String skipReward = skipRewardTextField.getText();
 
         if (identityProvider.isEmpty() || accessToken.isEmpty() || channelID.isEmpty() || channelName.isEmpty()) {
-            Notifications.create().title("Ошибка настройки").text("Обязательные поля должны быть заполнены").position(Pos.CENTER).showError();
+            Notifications.create()
+                    .title("Ошибка настройки")
+                    .text("Обязательные поля должны быть заполнены")
+                    .position(Pos.CENTER)
+                    .showError();
             return;
         }
 

@@ -1,7 +1,7 @@
-package net.flectone.music.flectonemusicapp.util;
+package net.flectone.music.util;
 
-import net.flectone.music.flectonemusicapp.file.Config;
-import net.flectone.music.flectonemusicapp.twitch.TwitchHandler;
+import net.flectone.music.file.Config;
+import net.flectone.music.twitch.TwitchHandler;
 
 import java.io.*;
 import java.util.Queue;
@@ -26,6 +26,9 @@ public class FileUtils {
             String accessToken = reader.readLine();
             String channelID = reader.readLine();
             String channelName = reader.readLine();
+
+            if (identityProvider == null || accessToken == null || channelID == null || channelName == null) return null;
+
             String getReward = reader.readLine();
             String addReward = reader.readLine();
             String skipReward = reader.readLine();
@@ -40,6 +43,8 @@ public class FileUtils {
 
 
     public static void saveToFile(Queue<String> queue, Config config) {
+        if (queue == null || queue.isEmpty()) return;
+
         try (PrintWriter writer = new PrintWriter(new FileWriter(config.getName()))) {
             queue.forEach(writer::println);
         } catch (IOException e) {
@@ -48,6 +53,8 @@ public class FileUtils {
     }
 
     public static void saveToFile(TwitchHandler twitchHandler, Config config) {
+        if (twitchHandler == null) return;
+
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(config.getName()))) {
             writer.write(twitchHandler.getIdentityProvider() + "\n");
             writer.write(twitchHandler.getAccessToken() + "\n");

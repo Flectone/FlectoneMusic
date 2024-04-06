@@ -36,3 +36,22 @@ build/
 
 ### Mac OS ###
 .DS_Store
+/cookies.json
+/dependency-reduced-pom.xml
+/hs_err_pid16424.log
+/media_queue.txt
+/twitch.txt
+/src/main/resources/META-INF/MANIFEST.MF
+/.idea/
+/.idea/
+/.idea/artifacts/
+/.idea/inspectionProfiles/
+/.idea/.gitignore
+/.idea/compiler.xml
+/.idea/discord.xml
+/.idea/encodings.xml
+/.idea/jarRepositories.xml
+/.idea/misc.xml
+/.idea/uiDesigner.xml
+/.idea/vcs.xml
+/.idea/workspace.xml

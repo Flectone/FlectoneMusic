@@ -1,4 +1,4 @@
-package net.flectone.music.flectonemusicapp.file;
+package net.flectone.music.file;
 
 import lombok.Getter;
 
@@ -14,5 +14,4 @@ public enum Config {
     Config(String name) {
         this.name = name;
     }
-
 }

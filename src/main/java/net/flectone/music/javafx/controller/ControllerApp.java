@@ -23,7 +23,7 @@ import java.util.Queue;
 import java.util.ResourceBundle;
 
 @Getter
-public class ControllerMain implements Initializable {
+public class ControllerApp implements Initializable {
 
     // JavaScript scripts constants
     private static final String PLAY_SCRIPT =
@@ -132,12 +132,12 @@ public class ControllerMain implements Initializable {
 
     // Inner class to bridge between Java and JavaScript
     public static class MediaBridge {
-        private final ControllerMain controllerMain;
+        private final ControllerApp controllerApp;
         private final WebEngine mediaWebEngine;
         private final Queue<String> mediaQueue;
 
-        public MediaBridge(ControllerMain controllerMain, WebEngine mediaWebEngine, Queue<String> mediaQueue) {
-            this.controllerMain = controllerMain;
+        public MediaBridge(ControllerApp controllerApp, WebEngine mediaWebEngine, Queue<String> mediaQueue) {
+            this.controllerApp = controllerApp;
             this.mediaWebEngine = mediaWebEngine;
             this.mediaQueue = mediaQueue;
         }
@@ -146,7 +146,7 @@ public class ControllerMain implements Initializable {
         public void playNext(boolean skip) {
             Platform.runLater(() -> {
 
-                String media = controllerMain.getMediaName();
+                String media = controllerApp.getMediaName();
                 if (!skip && media != null) return;
 
                 System.out.println(media);
@@ -154,9 +154,9 @@ public class ControllerMain implements Initializable {
                 media = mediaQueue.poll();
                 if (media == null) {
                     if (skip) {
-                        controllerMain.nextPlayer();
+                        controllerApp.nextPlayer();
                     } else {
-                        controllerMain.playPlayer();
+                        controllerApp.playPlayer();
                     }
 
                     mediaWebEngine.load(null);
@@ -164,7 +164,7 @@ public class ControllerMain implements Initializable {
                 }
 
                 mediaWebEngine.load(media);
-                controllerMain.pausePlayer();
+                controllerApp.pausePlayer();
             });
         }
     }

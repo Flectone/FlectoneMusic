@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.web.WebView?>
 
-<AnchorPane fx:id="mainPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="448.0" prefWidth="824.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="net.flectone.music.flectonemusicapp.javafx.Controller">
+<AnchorPane fx:id="mainPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="448.0" prefWidth="824.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="net.flectone.music.javafx.controller.ControllerApp">
     <children>
         <GridPane prefHeight="448.0" prefWidth="824.0" style="-fx-background-color: white;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <columnConstraints>
@@ -23,15 +23,15 @@
             <children>
                 <AnchorPane GridPane.columnIndex="1">
                     <children>
-                        <AnchorPane fx:id="mediaPane" layoutY="174.0" prefHeight="239.0" prefWidth="412.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="174.0">
+                        <AnchorPane fx:id="mediaPane" layoutY="174.0" prefHeight="239.0" prefWidth="377.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="174.0">
                             <children>
-                                <WebView fx:id="mediaWebView" layoutY="-26.0" prefHeight="200.0" prefWidth="412.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                                <WebView fx:id="mediaWebView" layoutY="-26.0" prefHeight="200.0" prefWidth="387.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                             </children>
                         </AnchorPane>
                   <ListView fx:id="mediaQueueList" layoutX="11.0" layoutY="8.0" prefHeight="156.0" prefWidth="390.0" AnchorPane.leftAnchor="11.0" AnchorPane.rightAnchor="11.0" />
                     </children>
                 </AnchorPane>
-                <AnchorPane fx:id="playerPane">
+                <AnchorPane fx:id="playerPane" prefWidth="448.0">
                     <children>
                         <WebView fx:id="playerWebView" prefHeight="424.0" prefWidth="508.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="24.0" />
                         <TextField fx:id="playerTextField" prefHeight="25.0" prefWidth="357.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="55.0" AnchorPane.topAnchor="0.0" />

@@ -1,10 +1,10 @@
-package net.flectone.music.flectonemusicapp.util;
+package net.flectone.music.util;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import com.sun.webkit.network.CookieManager;
-import net.flectone.music.flectonemusicapp.file.Config;
+import net.flectone.music.file.Config;
 
 import java.io.File;
 import java.lang.reflect.Field;
