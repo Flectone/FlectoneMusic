@@ -37,9 +37,13 @@ public class ControllerApp implements Initializable {
             "document.getElementsByClassName('player-controls__btn_next')[0].click();" +
             "} else {document.getElementsByClassName('player-controls__btn_play')[0].click();}";
     private static final String CLICK_SCRIPT = "document.querySelector('.player-controls__btn_play').click();";
+    private static final String PLAY_SCRIPT = "if (!externalApi.isPlaying()) {externalAPI.togglePause();}";
+    private static final String PAUSE_SCRIPT = "if (externalApi.isPlaying()) {externalAPI.togglePause();}";
+    private static final String NEXT_SCRIPT = "externalAPI.next();";
+    private static final String CLICK_SCRIPT = "externalAPI.togglePause();";
     private static final String GET_TIME_SCRIPT = "document.querySelector('.ytp-time-duration').textContent";
     private static final String GET_MEDIA_NAME_SCRIPT = "document.getElementsByClassName('style-scope ytd-watch-metadata')[0].firstElementChild.textContent;";
-    private static final String GET_SONG_NAME_SCRIPT = "document.querySelector('.track__title').textContent";
+    private static final String GET_SONG_NAME_SCRIPT = "externalAPI.getCurrentTrack().title;";
     private static final String MEDIA_INJECT_SCRIPT = "document.querySelector('video').addEventListener('ended', e => {window.media.playNext(true)});";
 
     // UI elements
