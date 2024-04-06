@@ -36,6 +36,7 @@ public class ControllerApp implements Initializable {
     private static final String GET_MEDIA_NAME_SCRIPT = "document.getElementsByClassName('style-scope ytd-watch-metadata')[0].firstElementChild.textContent;";
     private static final String GET_SONG_NAME_SCRIPT = "externalAPI.getCurrentTrack().title;";
     private static final String MEDIA_INJECT_SCRIPT = "document.querySelector('video').addEventListener('ended', e => {window.media.playNext(true)});";
+    private static final String AUTO_MEDIA_INJECT_SCRIPT = "setTimeout(() => {if (document.querySelector('.ytp-time-current').textContent == \"0:00\") {document.querySelector('.ytp-cued-thumbnail-overlay').click();}}, 1500)";
 
     // UI elements
     @FXML
@@ -77,7 +78,7 @@ public class ControllerApp implements Initializable {
 
         playerWebEngine.getLoadWorker().stateProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue == Worker.State.SUCCEEDED) {
-                playerWebEngine.executeScript(SONG_INJECT_SCRIPT);
+                playerWebEngine.executeScript(AUTO_SONG_INJECT_SCRIPT);
                 CookieUtils.saveCookies();
             }
         });
@@ -125,6 +126,7 @@ public class ControllerApp implements Initializable {
         }
 
         webEngine.executeScript(MEDIA_INJECT_SCRIPT);
+        webEngine.executeScript(AUTO_MEDIA_INJECT_SCRIPT);
     }
 
     // Inner class to bridge between Java and JavaScript
