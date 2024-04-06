@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.web.WebView?>
+
+<AnchorPane fx:id="mainPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="448.0" prefWidth="824.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="net.flectone.music.flectonemusicapp.javafx.Controller">
+    <children>
+        <GridPane prefHeight="448.0" prefWidth="824.0" style="-fx-background-color: white;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" />
+                <ColumnConstraints hgrow="SOMETIMES" />
+            </columnConstraints>
+            <rowConstraints>
+                <RowConstraints maxHeight="1.7976931348623157E308" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="-Infinity" vgrow="SOMETIMES" />
+            </rowConstraints>
+            <children>
+                <AnchorPane GridPane.columnIndex="1">
+                    <children>
+                        <AnchorPane fx:id="mediaPane" layoutY="174.0" prefHeight="239.0" prefWidth="412.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="174.0">
+                            <children>
+                                <WebView fx:id="mediaWebView" layoutY="-26.0" prefHeight="200.0" prefWidth="412.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                            </children>
+                        </AnchorPane>
+                  <ListView fx:id="mediaQueueList" layoutX="11.0" layoutY="8.0" prefHeight="156.0" prefWidth="390.0" AnchorPane.leftAnchor="11.0" AnchorPane.rightAnchor="11.0" />
+                    </children>
+                </AnchorPane>
+                <AnchorPane fx:id="playerPane">
+                    <children>
+                        <WebView fx:id="playerWebView" prefHeight="424.0" prefWidth="508.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="24.0" />
+                        <TextField fx:id="playerTextField" prefHeight="25.0" prefWidth="357.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="55.0" AnchorPane.topAnchor="0.0" />
+                        <Button fx:id="playerButton" mnemonicParsing="false" onAction="#loadPage" prefHeight="25.0" prefWidth="58.0" text="Поиск" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                    </children>
+                </AnchorPane>
+            <AnchorPane GridPane.rowIndex="1">
+               <children>
+                  <Button fx:id="settingButton" layoutX="6.0" mnemonicParsing="false" onAction="#showSettingTwitch" text="Настройка" AnchorPane.bottomAnchor="1.0" AnchorPane.leftAnchor="6.0" />
+                        <Button fx:id="skipButton" layoutX="88.0" mnemonicParsing="false" onAction="#mediaSkipButtonAction" text="Пропустить" AnchorPane.bottomAnchor="1.0" AnchorPane.leftAnchor="88.0" />
+               </children>
+            </AnchorPane>
+            </children>
+        </GridPane>
+    </children>
+</AnchorPane>
