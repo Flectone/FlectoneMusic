@@ -12,6 +12,7 @@ public enum Script {
     AUTO_SKIP_MEDIA("auto_skip_media.js"),
     AUTO_SKIP_SONG("auto_skip_song.js"),
     CLICK_SONG("click_song.js"),
+    CLICK_MEDIA("click_media.js"),
     GET_MEDIA_NAME("get_media_name.js"),
     GET_MEDIA_TIME("get_media_time.js"),
     GET_SONG_NAME("get_song_name.js"),

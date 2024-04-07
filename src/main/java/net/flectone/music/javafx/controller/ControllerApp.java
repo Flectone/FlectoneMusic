@@ -37,9 +37,13 @@ public class ControllerApp implements Initializable {
     @FXML
     Button settingButton;
     @FXML
+    Button mediaTurnButton;
+    @FXML
     TextField playerTextField;
     @FXML
     ListView<String> mediaQueueList;
+
+    private boolean isEnableMedia = true;
 
     // WebEngines for WebView
     private WebEngine playerWebEngine;
@@ -135,26 +139,29 @@ public class ControllerApp implements Initializable {
         // Play next media, optionally skipping the current one
         public void playNext(boolean skip) {
             Platform.runLater(() -> {
+                if (controllerApp.isEnableMedia()) {
+                    String media = skip ? null : controllerApp.getMediaName();
 
-                String media = controllerApp.getMediaName();
-                if (!skip && media != null) return;
+                    if (media == null) {
+                        media = mediaQueue.poll();
+                    }
 
-                System.out.println(media);
+                    System.out.println(media);
 
-                media = mediaQueue.poll();
-                if (media == null) {
-                    if (skip) {
-                        controllerApp.nextPlayer();
-                    } else {
-                        controllerApp.playPlayer();
+                    if (media != null) {
+                        mediaWebEngine.load(media);
+                        controllerApp.pausePlayer();
+                        return;
                     }
 
                     mediaWebEngine.load(null);
-                    return;
                 }
 
-                mediaWebEngine.load(media);
-                controllerApp.pausePlayer();
+                if (skip) {
+                    controllerApp.nextPlayer();
+                } else {
+                    controllerApp.playPlayer();
+                }
             });
         }
     }
@@ -236,5 +243,20 @@ public class ControllerApp implements Initializable {
     public void showSettingTwitch() throws IOException {
         Main.app.showTwitchScene();
     }
+
+    public void mediaTurnButtonAction() {
+        if (isEnableMedia) {
+            mediaTurnButton.setText("Включить реквесты");
+            isEnableMedia = false;
+
+        } else {
+            mediaTurnButton.setText("Выключить реквесты");
+            isEnableMedia = true;
+        }
+
+        mediaWebEngine.executeScript(SCRIPTS.get(Script.CLICK_MEDIA));
+        mediaBridge.playNext(false);
+    }
+
 
 }
