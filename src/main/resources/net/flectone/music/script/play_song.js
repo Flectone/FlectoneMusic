@@ -1,3 +1,3 @@
-if (!externalAPI.isPlaying()) {
+if (typeof externalAPI !== 'undefined' && !externalAPI.isPlaying()) {
     externalAPI.togglePause();
 }
