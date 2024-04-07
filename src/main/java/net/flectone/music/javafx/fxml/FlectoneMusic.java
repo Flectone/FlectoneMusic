@@ -10,7 +10,7 @@ import net.flectone.music.file.Config;
 import net.flectone.music.javafx.controller.ControllerApp;
 import net.flectone.music.util.FileUtils;
 
-import java.io.*;
+import java.io.IOException;
 
 public class FlectoneMusic extends Application {
 
@@ -35,7 +35,7 @@ public class FlectoneMusic extends Application {
     private void showAppScene(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("app.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 1000, 500);
-        stage.setTitle("FlectoneMusic - музыка стимера и его зрителей");
+        stage.setTitle("FlectoneMusic - музыка стримера и его зрителей");
         stage.setScene(scene);
         stage.show();
 
