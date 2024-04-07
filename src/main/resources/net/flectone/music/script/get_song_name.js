@@ -1,1 +1,3 @@
-externalAPI.getCurrentTrack().title;
+if (typeof externalAPI !== 'undefined') {
+    externalAPI.getCurrentTrack().title;
+}
