@@ -7,7 +7,8 @@ public enum Config {
 
     TWITCH("twitch.txt"),
     MEDIA_QUEUE("media_queue.txt"),
-    COOKIES("cookies.json");
+    COOKIES("cookies.json"),
+    SCRIPT("script");
 
     private final String name;
 

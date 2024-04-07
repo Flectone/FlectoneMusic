@@ -1,0 +1,1 @@
+document.getElementsByClassName('style-scope ytd-watch-metadata')[0].firstElementChild.textContent;

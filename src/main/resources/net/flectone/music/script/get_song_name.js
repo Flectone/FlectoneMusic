@@ -1,0 +1,1 @@
+externalAPI.getCurrentTrack().title;

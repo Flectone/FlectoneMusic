@@ -11,6 +11,7 @@ import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 import lombok.Getter;
 import net.flectone.music.Main;
+import net.flectone.music.file.Script;
 import net.flectone.music.util.CookieUtils;
 import net.flectone.music.util.FileUtils;
 import netscape.javascript.JSException;
@@ -18,25 +19,10 @@ import netscape.javascript.JSObject;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.LinkedList;
-import java.util.Queue;
-import java.util.ResourceBundle;
+import java.util.*;
 
 @Getter
 public class ControllerApp implements Initializable {
-
-    // JavaScript scripts constants
-    private static final String PLAY_SCRIPT = "if (!externalAPI.isPlaying()) {externalAPI.togglePause();}";
-    private static final String PAUSE_SCRIPT = "if (externalAPI.isPlaying()) {externalAPI.togglePause();}";
-    private static final String NEXT_SCRIPT = "if (!externalAPI.isPlaying()) {externalAPI.togglePause();} else {externalAPI.next();}";
-    private static final String CLICK_SCRIPT = "externalAPI.togglePause();";
-    private static final String AUTO_SONG_INJECT_SCRIPT = "externalAPI.on(externalAPI.EVENT_STATE, () => setTimeout(() => {if (externalAPI.getProgress().position == 0.0) {externalAPI.next();}}, 1500));";
-
-    private static final String GET_TIME_SCRIPT = "document.querySelector('.ytp-time-duration').textContent";
-    private static final String GET_MEDIA_NAME_SCRIPT = "document.getElementsByClassName('style-scope ytd-watch-metadata')[0].firstElementChild.textContent;";
-    private static final String GET_SONG_NAME_SCRIPT = "externalAPI.getCurrentTrack().title;";
-    private static final String MEDIA_INJECT_SCRIPT = "document.querySelector('video').addEventListener('ended', e => {window.media.playNext(true)});";
-    private static final String AUTO_MEDIA_INJECT_SCRIPT = "setTimeout(() => {if (document.querySelector('.ytp-time-current').textContent == \"0:00\") {document.querySelector('.ytp-cued-thumbnail-overlay').click();}}, 1500)";
 
     // UI elements
     @FXML
@@ -64,8 +50,12 @@ public class ControllerApp implements Initializable {
     // Queue for media URLs
     private final Queue<String> mediaQueue = new LinkedList<>();
 
+    private static final Map<Script, String> SCRIPTS = new HashMap<>();
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        FileUtils.load(SCRIPTS);
+
         CookieUtils.loadCookies();
         setupPlayer();
         setupMedia();
@@ -78,7 +68,7 @@ public class ControllerApp implements Initializable {
 
         playerWebEngine.getLoadWorker().stateProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue == Worker.State.SUCCEEDED) {
-                playerWebEngine.executeScript(AUTO_SONG_INJECT_SCRIPT);
+                playerWebEngine.executeScript(SCRIPTS.get(Script.AUTO_SKIP_SONG));
                 CookieUtils.saveCookies();
             }
         });
@@ -125,8 +115,8 @@ public class ControllerApp implements Initializable {
             return;
         }
 
-        webEngine.executeScript(MEDIA_INJECT_SCRIPT);
-        webEngine.executeScript(AUTO_MEDIA_INJECT_SCRIPT);
+        webEngine.executeScript(SCRIPTS.get(Script.AUTO_NEXT_MEDIA));
+        webEngine.executeScript(SCRIPTS.get(Script.AUTO_SKIP_MEDIA));
     }
 
     // Inner class to bridge between Java and JavaScript
@@ -174,7 +164,7 @@ public class ControllerApp implements Initializable {
 
     public void playPlayer() {
         try {
-            playerWebEngine.executeScript(PLAY_SCRIPT);
+            playerWebEngine.executeScript(SCRIPTS.get(Script.PLAY_SONG));
         } catch (JSException e) {
             e.printStackTrace();
         }
@@ -182,7 +172,7 @@ public class ControllerApp implements Initializable {
 
     public void pausePlayer() {
         try {
-            playerWebEngine.executeScript(PAUSE_SCRIPT);
+            playerWebEngine.executeScript(SCRIPTS.get(Script.PAUSE_SONG));
         } catch (JSException e) {
             e.printStackTrace();
         }
@@ -190,7 +180,7 @@ public class ControllerApp implements Initializable {
 
     public void nextPlayer() {
         try {
-            playerWebEngine.executeScript(NEXT_SCRIPT);
+            playerWebEngine.executeScript(SCRIPTS.get(Script.NEXT_SONG));
         } catch (JSException e) {
             e.printStackTrace();
         }
@@ -214,12 +204,12 @@ public class ControllerApp implements Initializable {
 
     // Click player
     public void clickPlayer() {
-        playerWebEngine.executeScript(CLICK_SCRIPT);
+        playerWebEngine.executeScript(SCRIPTS.get(Script.CLICK_SONG));
     }
 
     private String getMediaName() {
         try {
-            Object object = mediaWebEngine.executeScript(GET_MEDIA_NAME_SCRIPT);
+            Object object = mediaWebEngine.executeScript(SCRIPTS.get(Script.GET_MEDIA_NAME));
             if (object != null) return String.valueOf(object).trim();
         } catch (JSException ignored) {}
 
@@ -232,7 +222,7 @@ public class ControllerApp implements Initializable {
 
         return string != null
                 ? string
-                : String.valueOf(playerWebEngine.executeScript(GET_SONG_NAME_SCRIPT)).trim();
+                : String.valueOf(playerWebEngine.executeScript(SCRIPTS.get(Script.GET_SONG_NAME))).trim();
     }
 
     private void updateTestList() {

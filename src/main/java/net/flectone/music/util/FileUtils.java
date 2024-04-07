@@ -1,12 +1,36 @@
 package net.flectone.music.util;
 
+import net.flectone.music.Main;
 import net.flectone.music.file.Config;
+import net.flectone.music.file.Script;
 import net.flectone.music.twitch.TwitchHandler;
 
 import java.io.*;
+import java.net.URISyntaxException;
+import java.nio.file.Files;
+import java.util.Map;
 import java.util.Queue;
 
 public class FileUtils {
+
+    public static void load(Map<Script, String> map) {
+        try {
+            File folder = new File(Main.class.getResource(Config.SCRIPT.getName()).toURI());
+            File[] listOfFiles = folder.listFiles();
+            if (listOfFiles == null) return;
+
+            for (File file : listOfFiles) {
+                if (!file.isFile()) continue;
+
+                String scriptContent = new String(Files.readAllBytes(file.toPath()));
+                map.put(Script.fromString(file.getName()), scriptContent);
+
+                System.out.println(file.getName() + " " + scriptContent);
+            }
+        } catch (URISyntaxException | IOException e) {
+            e.printStackTrace();
+        }
+    }
 
     public static void load(Queue<String> queue) {
         if (!new File(Config.MEDIA_QUEUE.getName()).exists()) return;

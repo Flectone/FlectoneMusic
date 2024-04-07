@@ -1,0 +1,1 @@
+document.querySelector('.ytp-time-duration').textContent
