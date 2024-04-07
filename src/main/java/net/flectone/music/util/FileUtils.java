@@ -6,7 +6,6 @@ import net.flectone.music.file.Script;
 import net.flectone.music.twitch.TwitchHandler;
 
 import java.io.*;
-import java.nio.file.Files;
 import java.util.Map;
 import java.util.Queue;
 
@@ -14,17 +13,16 @@ public class FileUtils {
 
     public static void load(Map<Script, String> map) {
         try {
-            File folder = new File(Main.class.getResource(Config.SCRIPT.getName()).getFile());
-            File[] listOfFiles = folder.listFiles();
-            if (listOfFiles == null) return;
 
-            for (File file : listOfFiles) {
-                if (!file.isFile()) continue;
+            for (Script script : Script.values()) {
 
-                String scriptContent = new String(Files.readAllBytes(file.toPath()));
-                map.put(Script.fromString(file.getName()), scriptContent);
+                InputStream inputStream = Main.class.getResourceAsStream(Config.SCRIPT.getName() + "/" + script.getName());
+                if (inputStream == null) return;
 
-                System.out.println(file.getName() + " " + scriptContent);
+                String scriptContent = new String(inputStream.readAllBytes());
+                map.put(script, scriptContent);
+
+                System.out.println(script + " " + scriptContent);
             }
         } catch (IOException e) {
             e.printStackTrace();
