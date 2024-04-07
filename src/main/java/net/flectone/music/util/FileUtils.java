@@ -6,7 +6,6 @@ import net.flectone.music.file.Script;
 import net.flectone.music.twitch.TwitchHandler;
 
 import java.io.*;
-import java.net.URISyntaxException;
 import java.nio.file.Files;
 import java.util.Map;
 import java.util.Queue;
@@ -15,7 +14,7 @@ public class FileUtils {
 
     public static void load(Map<Script, String> map) {
         try {
-            File folder = new File(Main.class.getResource(Config.SCRIPT.getName()).toURI());
+            File folder = new File(Main.class.getResource(Config.SCRIPT.getName()).getFile());
             File[] listOfFiles = folder.listFiles();
             if (listOfFiles == null) return;
 
@@ -27,7 +26,7 @@ public class FileUtils {
 
                 System.out.println(file.getName() + " " + scriptContent);
             }
-        } catch (URISyntaxException | IOException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
