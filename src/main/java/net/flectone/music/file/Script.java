@@ -1,7 +1,6 @@
 package net.flectone.music.file;
 
 import lombok.Getter;
-import lombok.Setter;
 
 import java.util.Arrays;
 
@@ -21,9 +20,6 @@ public enum Script {
     PLAY_SONG("play_song.js");
 
     private final String name;
-
-    @Setter
-    private String action;
 
     Script(String name) {
         this.name = name;
