@@ -140,14 +140,14 @@ public class ControllerApp implements Initializable {
         public void playNext(boolean skip) {
             Platform.runLater(() -> {
                 if (controllerApp.isEnableMedia()) {
-                    String media = skip ? null : controllerApp.getMediaName();
 
-                    if (media == null) {
-                        controllerApp.updateMediaQueueListView();
-                        media = mediaQueue.poll();
+                    if (!skip && controllerApp.getMediaName() != null) {
+                        controllerApp.pausePlayer();
+                        return;
                     }
 
-                    System.out.println(media);
+                    controllerApp.updateMediaQueueListView();
+                    String media = mediaQueue.poll();
 
                     if (media != null) {
                         mediaWebEngine.load(media);
@@ -156,6 +156,8 @@ public class ControllerApp implements Initializable {
                     }
 
                     mediaWebEngine.load(null);
+                    controllerApp.playPlayer();
+                    return;
                 }
 
                 if (skip) {
