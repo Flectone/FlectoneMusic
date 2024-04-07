@@ -14,6 +14,7 @@ import net.flectone.music.Main;
 import net.flectone.music.file.Script;
 import net.flectone.music.util.CookieUtils;
 import net.flectone.music.util.FileUtils;
+import net.flectone.music.util.TimeUtils;
 import netscape.javascript.JSException;
 import netscape.javascript.JSObject;
 
@@ -108,9 +109,9 @@ public class ControllerApp implements Initializable {
         jsobj.setMember("media", mediaBridge);
 
         // check video time
-        String[] stringTime = String.valueOf(webEngine.executeScript(GET_TIME_SCRIPT)).split(":");
-        int time = Integer.parseInt(stringTime[0]) * 60 + Integer.parseInt(stringTime[1]);
-        if (time > 250) {
+        String time = String.valueOf(webEngine.executeScript(SCRIPTS.get(Script.GET_MEDIA_TIME)));
+
+        if (TimeUtils.get(time) > 250) {
             mediaBridge.playNext(true);
             return;
         }
