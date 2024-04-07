@@ -143,6 +143,7 @@ public class ControllerApp implements Initializable {
                     String media = skip ? null : controllerApp.getMediaName();
 
                     if (media == null) {
+                        controllerApp.updateMediaQueueListView();
                         media = mediaQueue.poll();
                     }
 
@@ -199,7 +200,7 @@ public class ControllerApp implements Initializable {
         Platform.runLater(() -> {
             System.out.println(url);
             mediaQueue.add(url);
-            updateTestList();
+            updateMediaQueueListView();
             mediaBridge.playNext(false);
         });
     }
@@ -207,7 +208,6 @@ public class ControllerApp implements Initializable {
     // Skip media
     public void mediaSkipButtonAction() {
         mediaBridge.playNext(true);
-        updateTestList();
     }
 
     // Click player
@@ -233,7 +233,7 @@ public class ControllerApp implements Initializable {
                 : String.valueOf(playerWebEngine.executeScript(SCRIPTS.get(Script.GET_SONG_NAME))).trim();
     }
 
-    private void updateTestList() {
+    private void updateMediaQueueListView() {
         Platform.runLater(() -> {
             mediaQueueList.getItems().clear();
             mediaQueueList.getItems().addAll(mediaQueue);
