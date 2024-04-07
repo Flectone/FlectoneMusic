@@ -42,17 +42,23 @@ public class TwitchHandler {
     }
 
     public void init() {
-        oAuth2Credential = new OAuth2Credential(identityProvider, accessToken);
-        twitchClient = TwitchClientBuilder.builder()
-                .withEnableHelix(true)
-                .withEnableChat(true)
-                .withEnablePubSub(true)
-                .withChatAccount(oAuth2Credential)
-                .build();
 
-        twitchClient.getPubSub().listenForChannelPointsRedemptionEvents(oAuth2Credential, channelID);
+        Thread thread = new Thread(() -> {
+            oAuth2Credential = new OAuth2Credential(identityProvider, accessToken);
+            twitchClient = TwitchClientBuilder.builder()
+                    .withEnableHelix(true)
+                    .withEnableChat(true)
+                    .withEnablePubSub(true)
+                    .withChatAccount(oAuth2Credential)
+                    .build();
 
-        twitchClient.getEventManager().onEvent(RewardRedeemedEvent.class, this::handleRewardRedeemedEvent);
+            twitchClient.getPubSub().listenForChannelPointsRedemptionEvents(oAuth2Credential, channelID);
+
+            twitchClient.getEventManager().onEvent(RewardRedeemedEvent.class, this::handleRewardRedeemedEvent);
+        });
+
+        thread.setDaemon(true);
+        thread.start();
     }
 
     private void handleRewardRedeemedEvent(RewardRedeemedEvent rewardRedeemedEvent) {
