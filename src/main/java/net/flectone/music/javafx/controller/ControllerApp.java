@@ -156,8 +156,6 @@ public class ControllerApp implements Initializable {
                     }
 
                     mediaWebEngine.load(null);
-                    controllerApp.playPlayer();
-                    return;
                 }
 
                 if (skip) {
