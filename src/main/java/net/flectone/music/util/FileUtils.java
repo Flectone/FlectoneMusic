@@ -67,10 +67,16 @@ public class FileUtils {
 
 
     public static void saveToFile(Queue<String> queue, Config config) {
-        if (queue == null || queue.isEmpty()) return;
+        if (queue == null) return;
 
         try (PrintWriter writer = new PrintWriter(new FileWriter(config.getName()))) {
-            queue.forEach(writer::println);
+
+            if (queue.isEmpty()) {
+                writer.write("");
+            } else {
+                queue.forEach(writer::println);
+            }
+
         } catch (IOException e) {
             e.printStackTrace();
         }
