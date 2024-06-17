@@ -70,6 +70,7 @@ public class ControllerApp implements Initializable {
         playerTextField.setText("https://music.yandex.ru/home");
         playerWebEngine = playerWebView.getEngine();
         playerWebEngine.setUserAgent("Mozilla/5.0");
+
         playerWebEngine.setJavaScriptEnabled(true);
 
         playerWebEngine.getLoadWorker().stateProperty().addListener((observable, oldValue, newValue) -> {
